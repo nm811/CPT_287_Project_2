@@ -80,6 +80,10 @@ public class InfixExpressionParser {
 	}
 	
 	// TODO: Evaluate postfix method
+	static int evaluate(String postfixExp) {
+		return 0; // change this later
+	}
+	
 	// TODO: main method that reads input from file and outputs to console
 	public static void main(String[] args) throws IOException {
 		// BufferedReader and StringTokenizer are faster than Scanner
