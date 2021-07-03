@@ -63,7 +63,11 @@ public class InfixExpressionParser {
 		return formattedExp.toString();
 	}
 	
-	// TODO: Precedence method
+	/** Returns the precedence of an operator.
+	    @param operator: the operator to find its precedence
+	    @return: the precedence of the operator
+	    @throws IllegalArgumentException: operator is not supported.
+	*/
 	private static int precedence(String operator) { // Should this be private?
 		if (operator.equals("^")) {
 			return 7;
@@ -82,10 +86,14 @@ public class InfixExpressionParser {
 			return 1;
 		} else {
 			// throw error
-			throw new IllegalArgumentException("fregeg");
+			throw new IllegalArgumentException(String.format("Operator %s is not supported.", operator));
 		}
 	}
-	// TODO: Convert infix to postfix method
+	
+	/** Converts an infix expression to postfix expression.
+		@param infixExp: an infix expression, tokens may or may not be separated by whitespaces
+		@return: resulting postfix expression with tokens separated by whitespaces
+	*/
 	static String infixToPostfix(String infixExp) { // Should this be private?
 		// All of the code for the infixToPostfix method I just copied and pasted 
 		// from the teacher's lecture slides just for reference
