@@ -155,9 +155,15 @@ public class InfixExpressionParser {
 		// We can change this though if it's confusing
 		BufferedReader br = new BufferedReader(new FileReader("input.txt"));
 		String line = br.readLine();
-		StringTokenizer st;
+		String exp, postfixExp;
+		int evaluation;
 		while (line != "") {
-			
+			exp = line;
+			postfixExp = infixToPostfix(exp);
+			evaluation = evaluate(postfixExp);
+			// TODO: format the output
+			System.out.println(evaluation);
+			line = br.readLine();
 		}
 		br.close();
 	}
