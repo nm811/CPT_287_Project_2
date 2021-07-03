@@ -7,7 +7,7 @@ public class InfixExpressionParser {
 	// TODO: Additional error handling ideas: check if operator is valid, check if parentheses are 
 	// balanced, check if character cannot be identified, what if user enters this: 4 4 / 2 --> invalid input
 	
-	// TODO: Add documentation comments and comments to explain code
+	// TODO: Add comments to explain code
 	
 	/**
 	 * Checks if a token is a valid operator
@@ -89,7 +89,6 @@ public class InfixExpressionParser {
 		} else if (operator.equals("||")) {
 			return 1;
 		} else {
-			// throw error
 			throw new IllegalArgumentException(String.format("Operator %s is not supported.", operator));
 		}
 	}
