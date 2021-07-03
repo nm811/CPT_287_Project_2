@@ -8,7 +8,7 @@ public class InfixExpressionParser {
 	// balanced, check if character cannot be identified, what if user enters this: 4 4 / 2 --> invalid input
 	
 	// TODO: Method to check if token is operator
-	private static boolean isOperator(String opr) {
+	private static boolean isOperator(String opr) { // Should this be private?
 		String[] validOperators = {"^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||"};
 		for (int i = 0; i < validOperators.length; i++) {
 			if (opr.equals(validOperators[i])) {
@@ -19,14 +19,14 @@ public class InfixExpressionParser {
 	}
 	
 	// TODO: Method to check if character is part of operator
-	private static boolean isPartOfOperator(char c) {
+	private static boolean isPartOfOperator(char c) { // Should this be private?
 		return c == '^' || c == '*' || c == '/' || c == '%' || c == '+' || c == '-' || 
 			   c == '<' || c == '>' || c == '=' || c == '!' || c == '&' || c == '|';
 		// throw error if false?
 	}
 	
 	// TODO: Format infix expression method
-	static String format(String exp) {
+	static String format(String exp) { // Should this be private?
 		StringBuilder formattedExp = new StringBuilder();
 		for (int i = 0; i < exp.length(); i++) {
 			if (Character.isDigit(exp.charAt(i))) {
@@ -54,7 +54,7 @@ public class InfixExpressionParser {
 	}
 	
 	// TODO: Precedence method
-	private static int precedence(String operator) { 
+	private static int precedence(String operator) { // Should this be private?
 		if (operator.equals("^")) {
 			return 7;
 		} else if (operator.equals("*") || operator.equals("/") || operator.equals("%")) {
@@ -75,10 +75,19 @@ public class InfixExpressionParser {
 		}
 	}
 	// TODO: Convert infix to postfix method
-	
+	static String infixToPostfix(String infixExp) { // Should this be private?
+		return ""; // change this later
+	}
 	
 	// TODO: Evaluate postfix method
 	// TODO: main method that reads input from file and outputs to console
 	public static void main(String[] args) throws IOException {
+		// BufferedReader and StringTokenizer are faster than Scanner
+		BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+		String line = br.readLine();
+		StringTokenizer st;
+		while (line != "") {
+			
+		}
 	}
 }
