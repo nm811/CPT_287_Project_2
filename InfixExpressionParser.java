@@ -35,7 +35,11 @@ public class InfixExpressionParser {
 		// throw error if false?
 	}
 	
-	// TODO: Format infix expression method
+	/**
+	 * Formats an expression by adding whitespace around tokens
+	 * @param exp: expression to be formatted (can be infix, prefix, or postfix)
+	 * @return: resulting formatted expression as a String with whitespace around tokens
+	 */
 	static String format(String exp) { // Should this be private?
 		StringBuilder formattedExp = new StringBuilder();
 		for (int i = 0; i < exp.length(); i++) {
