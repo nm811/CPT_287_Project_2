@@ -1,12 +1,28 @@
 package project_2;
 
+import java.util.*;
+import java.io.*;
+
 public class InfixExpressionParser {
+	// TODO: Additional error handling ideas: check if operator is valid, check if parentheses are 
+	// balanced, check if character cannot be identified, what if user enters this: 4 4 / 2 --> invalid input
+	
 	// TODO: Method to check if token is operator
+	private static boolean isOperator(String opr) {
+		String[] validOperators = {"^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||"};
+		for (int i = 0; i < validOperators.length; i++) {
+			if (opr.equals(validOperators[i])) {
+				return true;
+			}
+		}
+		return false; // throw error if false?
+	}
 	
 	// TODO: Method to check if character is part of operator
 	private static boolean isPartOfOperator(char c) {
 		return c == '^' || c == '*' || c == '/' || c == '%' || c == '+' || c == '-' || 
 			   c == '<' || c == '>' || c == '=' || c == '!' || c == '&' || c == '|';
+		// throw error if false?
 	}
 	
 	// TODO: Format infix expression method
@@ -30,12 +46,39 @@ public class InfixExpressionParser {
 			} else if (exp.charAt(i) == '(' || exp.charAt(i) == ')') {
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
+			} else if (exp.charAt(i) != ' ') {
+				// throw error
 			}
 		}
 		return formattedExp.toString();
 	}
+	
 	// TODO: Precedence method
+	private static int precedence(String operator) { 
+		if (operator.equals("^")) {
+			return 7;
+		} else if (operator.equals("*") || operator.equals("/") || operator.equals("%")) {
+			return 6;
+		} else if (operator.equals("+") || operator.equals("-")) {
+			return 5;
+		} else if (operator.equals("<") || operator.equals("<=") || operator.equals(">") || 
+				   operator.equals(">=")) {
+			return 4;
+		} else if (operator.equals("==") || operator.equals("!=")) {
+			return 3;
+		} else if (operator.equals("&&")) {
+			return 2;
+		} else if (operator.equals("||")) {
+			return 1;
+		} else {
+			// throw error
+		}
+	}
 	// TODO: Convert infix to postfix method
+	
+	
 	// TODO: Evaluate postfix method
 	// TODO: main method that reads input from file and outputs to console
+	public static void main(String[] args) throws IOException {
+	}
 }
