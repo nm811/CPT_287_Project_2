@@ -10,21 +10,6 @@ public class InfixExpressionParser {
 	// TODO: Add documentation comments and comments to explain code
 	
 	/**
-	 * Checks if a token is a valid operator
-	 * @param opr: the String that is being tested to see if it's a valid operator
-	 * @return: {true} if the argument is a valid operator; {false} otherwise
-	 */
-	private static boolean isOperator(String opr) { // Should this be private?
-		String[] validOperators = {"^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||"};
-		for (int i = 0; i < validOperators.length; i++) {
-			if (opr.equals(validOperators[i])) {
-				return true;
-			}
-		}
-		return false; // throw error if false?
-	}
-	
-	/**
 	 * Checks if a character is part of a valid operator
 	 * @param c: the character being tested to see if it's part of a valid operator
 	 * @return: {true} if the argument character is part of a valid operator; {false} otherwise
