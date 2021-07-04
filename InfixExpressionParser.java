@@ -7,7 +7,7 @@ public class InfixExpressionParser {
 	// TODO: Additional error handling ideas: check if operator is valid, check if parentheses are 
 	// balanced, check if character cannot be identified, what if user enters this: 4 4 / 2 --> invalid input
 	
-	// TODO: Add comments to explain code
+	// TODO: Add documentation comments and comments to explain code
 	
 	/**
 	 * Checks if a token is a valid operator
@@ -32,7 +32,6 @@ public class InfixExpressionParser {
 	private static boolean isPartOfOperator(char c) { // Should this be private?
 		return c == '^' || c == '*' || c == '/' || c == '%' || c == '+' || c == '-' || 
 			   c == '<' || c == '>' || c == '=' || c == '!' || c == '&' || c == '|';
-		// throw error if false?
 	}
 	
 	/**
@@ -67,10 +66,11 @@ public class InfixExpressionParser {
 		return formattedExp.toString();
 	}
 	
-	/** Returns the precedence of an operator.
-	    @param operator: the operator to find its precedence
-	    @return: the precedence of the operator
-	    @throws IllegalArgumentException: operator is not supported.
+	/** 
+	 * Returns the precedence of an operator.
+	 * @param operator: the operator to find its precedence
+	 * @return: the precedence of the operator
+	 * @throws IllegalArgumentException: operator is not supported.
 	*/
 	private static int precedence(String operator) { // Should this be private?
 		if (operator.equals("^")) {
@@ -93,9 +93,10 @@ public class InfixExpressionParser {
 		}
 	}
 	
-	/** Converts an infix expression to postfix expression.
-		@param infixExp: an infix expression, tokens may or may not be separated by whitespaces
-		@return: resulting postfix expression with tokens separated by whitespaces
+	/** 
+	 * Converts an infix expression to postfix expression.
+	 * @param infixExp: an infix expression, tokens may or may not be separated by whitespaces
+	 * @return: resulting postfix expression with tokens separated by whitespaces
 	*/
 	static String infixToPostfix(String infixExp) { // Should this be private?
 		// All of the code for the infixToPostfix method I just copied and pasted 
