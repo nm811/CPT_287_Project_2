@@ -27,6 +27,10 @@ public class Postfix {
 			
 			// If the token is a number (digit), push it to the stack.
 			if (Character.isDigit(token.charAt(0))) {
+				// Token is a positive integer.
+				stack.push(Integer.valueOf(token));
+			} else if (token.charAt(0) == '-' && token.length() > 1) {
+				// Token is a negative integer.
 				stack.push(Integer.valueOf(token));
 			}
 
@@ -54,7 +58,11 @@ public class Postfix {
 					try {
 						stack.push((int) lftOperand / rtOperand);
 					} catch (ArithmeticException e) { // Divide-by-zero error
-						System.out.print("Infinity \nError:️ Cannot Divide By ");
+						if (lftOperand < 0 || rtOperand < 0) {
+							System.out.print("-Infinity \nError:️ Cannot Divide By ");
+						} else {
+							System.out.print("Infinity \nError:️ Cannot Divide By ");
+						}
 						return 0;
 					}
 					break;
