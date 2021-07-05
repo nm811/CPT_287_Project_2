@@ -28,10 +28,16 @@ public class InfixParser {
 	/* Comments added by Adam Jost on 07/04/2021 */
 	/* Update by Adam Jost on 07/05/2021 */ 
 	/**
+	 
+	 */
+	
+	/**
+	 * 
 	 * Formats an expression by adding whitespace around tokens
 	 * @param exp: expression to be formatted (can be infix, prefix, or postfix)
 	 * @return: resulting formatted expression as a String with whitespace around
 	 *          tokens.
+	 * @throws IllegalArgumentException: Variables are not currently supported.
 	 */
 	public static String format(String exp) {
 		StringBuilder formattedExp = new StringBuilder();
@@ -68,7 +74,9 @@ public class InfixParser {
 				// append it to the StringBuilder followed by a blank space.
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
-			} else if (exp.charAt(i) == ' '){
+			} else if (Character.isWhitespace(exp.charAt(i))) {
+				// If the character is any form of whitespace then simply continue to
+				// the next character to be evaluated. 
 				continue;
 			} else if (Character.isLetter(exp.charAt(i))) {
 				// If the user is attempting to use variables in their infix expression then
