@@ -10,7 +10,7 @@ import project2.expressions.ip.InfixParser;
 import project2.expressions.ip.Postfix;
 
 public class ExpressionEvaluator {
-	/* Written by Adam Jost on 07/04/2021 */
+
 	public static void main(String[] args) throws IOException {
 		// Open input streams
 		FileInputStream fin = new FileInputStream("expressions.txt");
