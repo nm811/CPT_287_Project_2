@@ -16,13 +16,13 @@ public class UpdatedPostfix {
 	 * @return: {true} if the argument is a valid operator; {false} otherwise
 	 */
 	private static boolean isOperator(String opr) {
-		String[] validOperators = {"^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||"};
-		for (int i = 0; i < validOperators.length; i++) {
-			if (opr.equals(validOperators[i])) {
-				return true;
+		String[] validOperators = {"^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||"}; // List of valid operators
+		for (int i = 0; i < validOperators.length; i++) { // For each valid operator
+			if (opr.equals(validOperators[i])) { // If the input String equals the valid operator
+				return true; // Then the input String is a valid operator, so return {true}
 			}
 		}
-		return false; // throw error if false?
+		return false; // If the input String does not equal any valid operator, then return {false}
 	}
 	
 	/* Written by Adam Jost on 07/04/2021 */
@@ -49,8 +49,8 @@ public class UpdatedPostfix {
         // format method to default, and change the above line and comments to:
         /*
         	// The input postfix expression is first formatted with whitespace around tokens so that 
-			// the user does not need to provide a correctly formatted input expression
-			// Then, create StringTokenizer to break up the formatted postfix expression into tokens
+		// the user does not need to provide a correctly formatted input expression
+		// Then, create StringTokenizer to break up the formatted postfix expression into tokens
 	        StringTokenizer st = new StringTokenizer(format(postfixExp));
          
         */
