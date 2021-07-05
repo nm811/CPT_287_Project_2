@@ -122,7 +122,7 @@ public class InfixParser {
 		// The code for the toPostfix method is a slightly modified version of Prof. Wang's infixToPostfix method, 
 		// which can be found here: https://gist.github.com/wangbuhuai/c3b716eadf6e7aa70b013975d440268e#file-02-stackalgorithms-java
 		// Key modifications:
-		// - I used StringTokenizer instead of scanner for efficiency.
+		// - StringTokenizer is used instead of scanner for efficiency.
 		// - The input infix expression does not need to be formatted correctly for the method to produce the correct output.
 		StringTokenizer st = new StringTokenizer(format(infixExp));
 		SinglyLinkedStack<String> stack = new SinglyLinkedStack<>();
