@@ -1,4 +1,5 @@
 /* Written by Adam Jost on 07/04/2021 */
+/* Updated by Adam Jost on 07/05/2021 */
 
 package project2.expressions;
 
@@ -10,7 +11,7 @@ import project2.expressions.ip.InfixParser;
 import project2.expressions.ip.Postfix;
 
 public class ExpressionEvaluator {
-
+	/* Written by Adam Jost on 07/04/2021 */
 	public static void main(String[] args) throws IOException {
 		// Open input streams
 		FileInputStream fin = new FileInputStream("expressions.txt");
@@ -18,11 +19,11 @@ public class ExpressionEvaluator {
 	
 		// Parse input data
 		while (scanner.hasNext()) {
-			// Read in the infix expression.
-			String infixExp = scanner.nextLine();
-			// If the current line has an expression (the line isn't 
-			// empty or only include whitespace)
-			if (infixExp.trim() != "") {
+			String line = scanner.nextLine().trim();
+			if (!line.equals("")) {
+				// Read in the infix expression and format it with a single white
+				// space surrounding each token.
+				String infixExp = InfixParser.format(line);
 				// Print the infix expression to the console.
 				System.out.printf("Infix:   %s\n", infixExp);
 				// Convert the infix expression to a postfix expression.
