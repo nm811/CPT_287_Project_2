@@ -122,7 +122,7 @@ public class InfixParser {
 		// All of the code for the infixToPostfix method I just copied and pasted
 		// from the teacher's lecture slides just for reference
 		StringTokenizer st = new StringTokenizer(format(infixExp));
-		SinglyLinkedStack<String> stack = new SinglyLinkedStack<String>();
+		SinglyLinkedStack<String> stack = new SinglyLinkedStack<>();
 		StringBuilder postfix = new StringBuilder();
 		while (st.hasMoreTokens()) {
 			String token = st.nextToken();
