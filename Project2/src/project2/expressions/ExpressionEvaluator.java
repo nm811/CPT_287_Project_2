@@ -1,4 +1,5 @@
 /* Written by Adam Jost on 07/04/2021 */
+/* Updated by Neha Metlapalli on 07/05/2021 */
 /* Updated by Adam Jost on 07/05/2021 */
 
 package project2.expressions;
@@ -11,7 +12,7 @@ import project2.expressions.ip.InfixParser;
 import project2.expressions.ip.Postfix;
 
 public class ExpressionEvaluator {
-	/* Written by Adam Jost on 07/04/2021 */
+
 	public static void main(String[] args) throws IOException {
 		// Open input streams
 		FileInputStream fin = new FileInputStream("expressions.txt");
