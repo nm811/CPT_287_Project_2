@@ -20,17 +20,19 @@ public class ExpressionEvaluator {
 		while (scanner.hasNext()) {
 			// Read in the infix expression.
 			String infixExp = scanner.nextLine();
-			// Print the infix expression to the console.
-			// !!Suggestion: use format method in InfixParser class to format the infix expression first. If you agree with this suggestion, 
-			// then you'll have to remove the private accessor for the format method.
-			System.out.printf("Infix:   %s\n", infixExp);
-			// Convert the infix expression to a postfix expression.
-			String postfixExp = InfixParser.toPostfix(infixExp);
-			// Print the postfix expression to the console.
-			System.out.printf("Postfix: %s\nResult:  ", postfixExp);
-			// Evaluate the postfix expression and then print the
-			// result to the console. 
-			System.out.printf("%s\n\n", Postfix.evaluate(postfixExp));
+			// If the current line has an expression (the line isn't 
+			// empty or only include whitespace)
+			if (infixExp.trim() != "") {
+				// Print the infix expression to the console.
+				System.out.printf("Infix:   %s\n", infixExp);
+				// Convert the infix expression to a postfix expression.
+				String postfixExp = InfixParser.toPostfix(infixExp);
+				// Print the postfix expression to the console.
+				System.out.printf("Postfix: %s\nResult:  ", postfixExp);
+				// Evaluate the postfix expression and then print the
+				// result to the console. 
+				System.out.printf("%s\n\n", Postfix.evaluate(postfixExp));
+			}
 		}
 		// Close open streams.
 		scanner.close();
