@@ -119,8 +119,11 @@ public class InfixParser {
 	 * @return: Resulting postfix expression with tokens separated by whitespaces.
 	 */
 	public static String toPostfix(String infixExp) { // Should this be private?
-		// All of the code for the infixToPostfix method I just copied and pasted
-		// from the teacher's lecture slides just for reference
+		// The code for the toPostfix method is a slightly modified version of Prof. Wang's infixToPostfix method, 
+		// which can be found here: https://gist.github.com/wangbuhuai/c3b716eadf6e7aa70b013975d440268e#file-02-stackalgorithms-java
+		// Key modifications:
+		// - I used StringTokenizer instead of scanner for efficiency.
+		// - The input infix expression does not need to be formatted correctly for the method to produce the correct output.
 		StringTokenizer st = new StringTokenizer(format(infixExp));
 		SinglyLinkedStack<String> stack = new SinglyLinkedStack<>();
 		StringBuilder postfix = new StringBuilder();
@@ -159,9 +162,11 @@ public class InfixParser {
 		while (!stack.isEmpty()) {
 			postfix.append(stack.pop()).append(' ');
 		}
+		// !! Suggestion: remove the comments below about the white spaces needing to be removed because doing that actually causes mistakes in the output. 
+		//    Also remove "replaceAll(" ", "")" in line 170 return statement. !!
 		// Return the postfix expression with all of the white spaces removed.
 		// The white spaces must be removed for the evaluation function to perform
 		// as intended. 
-		return postfix.toString().replaceAll(" ", "");
+		return postfix.toString().replaceAll(" ", ""); 
 	}  // Time complexity: O(n)
 }
