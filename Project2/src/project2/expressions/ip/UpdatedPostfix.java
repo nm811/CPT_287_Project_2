@@ -23,7 +23,7 @@ public class UpdatedPostfix {
 			}
 		}
 		return false; // If the input String does not equal any valid operator, then return {false}
-	}
+	} // Time complexity: O(1)
 	
 	/* Written by Adam Jost on 07/04/2021 */
 	/**
