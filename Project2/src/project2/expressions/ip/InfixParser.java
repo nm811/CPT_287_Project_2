@@ -22,7 +22,7 @@ public class InfixParser {
 		// If the character is one of the following return {true}. Otherwise, return {false}.
 		return c == '^' || c == '*' || c == '/' || c == '%' || c == '+' || c == '-' || c == '<' || c == '>' || c == '='
 				|| c == '!' || c == '&' || c == '|';
-	}
+	} // Time Complexity: O(1)
 	
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
@@ -109,7 +109,7 @@ public class InfixParser {
 			throw new IllegalArgumentException(String.format("Operator %s is not "
 					+ "supported.", operator));
 		}
-	}  
+	} // Time Complexity O(1)
     
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/**
@@ -168,5 +168,5 @@ public class InfixParser {
 		// The white spaces must be removed for the evaluation function to perform
 		// as intended. 
 		return postfix.toString().replaceAll(" ", ""); 
-	}  // Time complexity: O(n)
+	}  // Time Complexity: O(n)
 }
