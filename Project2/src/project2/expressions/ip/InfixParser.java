@@ -57,6 +57,24 @@ public class InfixParser {
 				i--;
 				// Add a blank space after the number.
 				formattedExp.append(' ');
+			} else if (exp.charAt(i) == '-' && i == 0 || exp.charAt(i) == '-' && isPartOfOperator(exp.charAt(i-1)) ||
+					exp.charAt(i) == '-' && Character.isWhitespace(exp.charAt(i-1)) && isPartOfOperator(exp.charAt(i-2)) ||
+					exp.charAt(i) == '-' && exp.charAt(i-1) == '(') {
+				// The current character is a '-' but what is its purpose? 
+				// The above check is to check whether its purpose is to be a 
+				// subtraction operator or to negate an integer value. If it is 
+				// {true} then the symbol is used to negate the following value
+				// otherwise it is a subtraction operator.
+				
+				// Append the operator.
+				formattedExp.append(exp.charAt(i));
+				// Continuously append 
+				while (i+1 < exp.length() && Character.isDigit(exp.charAt(i+1))) {
+					formattedExp.append(exp.charAt(i+1));
+					i++;
+				}
+				// Add a blank space after the number.
+				formattedExp.append(' ');
 			} else if (isPartOfOperator(exp.charAt(i))) {
 				// Continuously append the current Character to the StringBuilder 
 				// until a digit is reached.
@@ -158,6 +176,9 @@ public class InfixParser {
 			// If the current token is a number then we append it to the postfix expression.
 			if (Character.isDigit(token.charAt(0))) {
 				postfix.append(token).append(' ');
+			} else if (token.charAt(0) == '-' && token.length() > 1) {
+				// Token is a negative number. Append the negative number.
+				postfix.append(token).append(' ');
 			}
 			// If the current token is opening parenthesis, push it onto the stack.
 			else if (token.equals("(")) {
@@ -172,6 +193,7 @@ public class InfixParser {
 				// Pop the opening parenthesis from the stack.
 				stack.pop();
 			} else {
+				
 				// The current token is an operator.
 				// Continuously pop and add operators to postfix expression string until the 
 				// stack is empty, an opening parenthesis is on the top of the stack, or the 
@@ -181,6 +203,7 @@ public class InfixParser {
 				}
 				// Push the operator to the stack.
 				stack.push(token);
+				
 			}
 		}
 		// Pop the remaining operators from the stack and append them to the postfix
