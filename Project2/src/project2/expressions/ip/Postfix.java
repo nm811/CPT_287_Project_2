@@ -54,7 +54,7 @@ public class Postfix {
 					try {
 						stack.push((int) lftOperand / rtOperand);
 					} catch (ArithmeticException e) { // Divide-by-zero error
-						System.out.print("♾️ \nError:️ Cannot Divide By ");
+						System.out.print("Infinity \nError:️ Cannot Divide By ");
 						return 0;
 					}
 					break;
