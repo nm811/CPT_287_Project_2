@@ -26,6 +26,7 @@ public class InfixParser {
 	
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
+	/* Update by Adam Jost on 07/05/2021 */ 
 	/**
 	 * Formats an expression by adding whitespace around tokens
 	 * @param exp: expression to be formatted (can be infix, prefix, or postfix)
@@ -67,6 +68,19 @@ public class InfixParser {
 				// append it to the StringBuilder followed by a blank space.
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
+			} else if (exp.charAt(i) == ' '){
+				continue;
+			} else if (Character.isLetter(exp.charAt(i))) {
+				// If the user is attempting to use variables in their infix expression then
+				// throw an IllegalArgumentException notifying the user that the found variable 
+				// is not currrently supported in this version. 
+				throw new IllegalArgumentException(String.format("Found letter \"%s\" but expected a numeric value."
+						+ " Variables are not currently supported.", exp.charAt(i)));
+			} else {
+				// If none of the above apply then the character must be an unrecognized symbol, so
+				// throw an IllegalArgumentException notifying the user that the item is not 
+				// currently supported. 
+				throw new IllegalArgumentException(String.format("Operator \"%s\" is not supported.", exp.charAt(i)));
 			}
 		}
 		// Return the formatted expression as a String.
