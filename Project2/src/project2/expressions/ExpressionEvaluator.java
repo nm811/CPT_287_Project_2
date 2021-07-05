@@ -21,6 +21,8 @@ public class ExpressionEvaluator {
 			// Read in the infix expression.
 			String infixExp = scanner.nextLine();
 			// Print the infix expression to the console.
+			// !!Suggestion: use format method in InfixParser class to format the infix expression first. If you agree with this suggestion, 
+			// then you'll have to remove the private accessor for the format method.
 			System.out.printf("Infix:   %s\n", infixExp);
 			// Convert the infix expression to a postfix expression.
 			String postfixExp = InfixParser.toPostfix(infixExp);
