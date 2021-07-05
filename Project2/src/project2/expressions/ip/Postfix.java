@@ -1,6 +1,9 @@
 /* Created by Adam Jost on 07/04/2021 */
+/* Updated by Adam Jost on 07/05/2021 */ 
 
 package project2.expressions.ip;
+
+import java.util.StringTokenizer;
 
 import project2.expressions.util.SinglyLinkedStack;
 
@@ -13,28 +16,23 @@ public class Postfix {
 	public static int evaluate(String expression) {
 		// Initialize a stack for performing the following.
 		SinglyLinkedStack<Integer> stack = new SinglyLinkedStack<>();
-
-		// Analyze all of the characters one by one.
-		for (int i = 0; i < expression.length(); i++) {
-			// The character being analyzed.
-			char c = expression.charAt(i);
+		
+		// StringTokenizer to break up the postfix expression into tokens
+		StringTokenizer tokenizer = new StringTokenizer(expression);
+		
+		// Analyze all of the tokens one by one.
+		while (tokenizer.hasMoreTokens()) {
+			// The current token being analyzed.
+			String token = tokenizer.nextToken();
 			
-			// If the character is a number, push it to the stack.
-			if (Character.isDigit(c)) {
-				stack.push(c - '0');
+			// If the token is a number (digit), push it to the stack.
+			if (Character.isDigit(token.charAt(0))) {
+				stack.push(Integer.valueOf(token));
 			}
 
 			// If the character is an operator then pop two
 			// elements from stack and then perform the operation.
 			else {
-				// A second character with a default value.
-				// Used for cases: >=, <=, ==, &&, and ||.
-				char c2 = ' ';
-				// If we are not at the end of the expression,
-				// store the following character.
-				if (i != expression.length() - 1) {
-					c2 = expression.charAt(i + 1);
-				}
 				
 				// Pop the top two digits to be used as the
 				// left and right operands of the following 
@@ -45,14 +43,14 @@ public class Postfix {
 				// Analyze the character to determine the type
 				// of operation to be performed and perform the 
 				// operation once a matching value is found. 
-				switch (c) {
-				case '+': // Addition
+				switch (token) {
+				case "+": // Addition
 					stack.push(lftOperand + rtOperand);
 					break;
-				case '-': // Subtraction
+				case "-": // Subtraction
 					stack.push(lftOperand - rtOperand);
 					break;
-				case '/': // Division
+				case "/": // Division
 					try {
 						stack.push((int) lftOperand / rtOperand);
 					} catch (ArithmeticException e) { // Divide-by-zero error
@@ -60,70 +58,62 @@ public class Postfix {
 						return 0;
 					}
 					break;
-				case '*': // Multiplication
+				case "*": // Multiplication
 					stack.push(lftOperand * rtOperand);
 					break;
-				case '^': // Power operator
+				case "^": // Power operator
 					stack.push((int) Math.pow(lftOperand, rtOperand));
 					break;
-				case '%': // Modulus
+				case "%": // Modulus
 					stack.push(lftOperand % rtOperand);
 					break;
-				case '>': // Greater than 
-					if (c2 == '=') { // Greater than or equal to ">="
-						// Push 1 for {true} if the leftOperand is
-						// greater than or equal to the right operand,
-						// push 0 for {false} otherwise.
-						stack.push(lftOperand >= rtOperand ? 1 : 0);
-						i++;
-					} else {
+				case ">": // Greater than 
 						// Push 1 for {true} if the leftOperand is
 						// greater than the right operand, push 0 for {false} 
 						// otherwise.
 						stack.push(lftOperand > rtOperand ? 1 : 0);
-					}
 					break;
-				case '<': // Less than "<"
-					if (c2 == '=') { // Less than or equal to "<="
-						// Push 1 for {true} if the leftOperand is
-						// less than or equal to the right operand,
-						// push 0 for {false} otherwise.
-						stack.push(lftOperand <= rtOperand ? 1 : 0);
-						i++;
-					} else {
+				case ">=": // Greater or equal to ">="
+					// Push 1 for {true} if the leftOperand is
+					// greater than or equal to the right operand, 
+					// push 0 for {false} otherwise.
+					stack.push(lftOperand >= rtOperand ? 1 : 0);
+					break;
+				case "<": // Less than "<"
 						// Push 1 for {true} if the leftOperand is
 						// less than the right operand, push 0 for {false} 
 						// otherwise.
 						stack.push(lftOperand < rtOperand ? 1 : 0);
-					}
 					break;
-				case '=': // Equal To "=="  
+				case "<=": // Less than or equal to "<="
+					// Push 1 for {true} if the leftOperand is
+					// less than or equal to the right operand,
+					// push 0 for {false} otherwise.
+					stack.push(lftOperand <= rtOperand ? 1 : 0);
+					break;
+				case "==": // Equal To "=="  
 					// Push 1 for {true} if the leftOperand is
 					// equal to the right operand, push 0 for {false} 
 					// otherwise.
 					stack.push(lftOperand == rtOperand ? 1 : 0);
-					i++;
 					break;
-				case '!': // Not Equal To "!="
+				case "!=": // Not Equal To "!="
 					// Push 1 for {true} if the leftOperand is not
 					// equal to the right operand, push 0 for {false} 
 					// otherwise.
 					stack.push(lftOperand != rtOperand ? 0 : 1);
-					i++;
 					break;
-				case '&': // Logic And
+				case "&&": // Logic And
 					// Push 1 for {true} if both operands are equal to 1
 					// and push 0 for {false} if either the left or right 
 					// operand is zero.
-					stack.push(lftOperand + rtOperand == 2 ? 1 : 0);
-					i++;
+					stack.push(lftOperand > 0 && rtOperand > 0 ? 1 : 0);
 					break;
-				case '|': // Logic Or
+				case "||": // Logic Or
 					// Push 1 for {true} if either operand is equal to 1
 					// and push 0 for {false} if both the left and right 
 					// operands are equal to zero.
-					stack.push(lftOperand + rtOperand > 0 ? 1 : 0);
-					i++;
+					stack.push(lftOperand > 0 || rtOperand > 0 ? 1 : 0);
 					break;
 				}
 			}
