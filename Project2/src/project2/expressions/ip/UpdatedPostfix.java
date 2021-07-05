@@ -77,7 +77,7 @@ public class UpdatedPostfix {
                 int left = stack.pop();
                 
                 // Analyze the token to determine the type
-				// of operation to be performed and push 
+		// of operation to be performed and push 
                 // the evaluation result onto the stack.
                 if (token.equals("^")) { // Power
                 	stack.push((int)Math.pow(left, right));
@@ -86,7 +86,7 @@ public class UpdatedPostfix {
                 } else if (token.equals("/")) { // Division
                 	// I changed this part of the error handling
                 	if (right == 0) {
-                		System.out.print("â™¾ï¸� \nError:ï¸� Cannot Divide By ");
+                		System.out.print("Error: Cannot Divide By ");
                 		return 0;
                 	} else {
                 		stack.push(left / right);
@@ -99,41 +99,45 @@ public class UpdatedPostfix {
                 	stack.push(left - right); 
                 } else if (token.equals(">")) { // Greater than 
                 	// Push 1 for {true} if the left operand is
-					// greater than the right operand, and
-					// push 0 for {false} otherwise.
+			// greater than the right operand, and
+			// push 0 for {false} otherwise.
                 	stack.push(left > right ? 1 : 0);
                 } else if (token.equals(">=")) { // Greater than or equal to
                 	// Push 1 for {true} if the left operand is
-					// greater than or equal to the right operand,
-					// and push 0 for {false} otherwise.
+			// greater than or equal to the right operand,
+			// and push 0 for {false} otherwise.
                 	stack.push(left >= right ? 1 : 0);
                 } else if (token.equals("<")) { // Less than
                 	// Push 1 for {true} if the left operand is
-					// less than the right operand, and
-					// push 0 for {false} otherwise.
+			// less than the right operand, and
+			// push 0 for {false} otherwise.
                 	stack.push(left < right ? 1 : 0);
                 } else if (token.equals("<=")) { // Less than or equal to
                 	// Push 1 for {true} if the left operand is
-					// less than or equal to the right operand,
-					// and push 0 for {false} otherwise.
+			// less than or equal to the right operand,
+			// and push 0 for {false} otherwise.
                 	stack.push(left <= right ? 1 : 0);
                 } else if (token.equals("==")) { // Equal to
                 	// Push 1 for {true} if the left operand is
-					// equal to the right operand, and push 0 for {false} 
-					// otherwise.
+			// equal to the right operand, and push 0 for {false} 
+			// otherwise.
                 	stack.push(left == right ? 1 : 0);
                 } else if (token.equals("!=")) { // Not equal to
                 	// Push 1 for {true} if the left operand is
-					// not equal to the right operand, and push 0 for {false} 
-					// otherwise.
+			// not equal to the right operand, and push 0 for {false} 
+			// otherwise.
                 	stack.push(left != right ? 1 : 0);
                 } else if (token.equals("&&")) { // Logic and
-                	// Push 1 for {true} if both operands are equal to 1,
-					// and push 0 for {false} otherwise.
-                	stack.push(left + right == 2 ? 1 : 0);
+                	// Push 1 for {true} if both operands are greater than or equal to 1,
+			// and push 0 for {false} otherwise.
+                	if (left >= 1 && right >= 1) {
+                		stack.push(1);
+                	} else {
+                		stack.push(0);
+                	}
                 } else { // Logic or "||"
                 	// Push 0 for {false} if both operands are equal to 0
-					// operands are equal to zero, and push 1 for {true} 
+			// operands are equal to zero, and push 1 for {true} 
                 	// otherwise.
                 	stack.push(left + right == 0 ? 0 : 1);
                 }
