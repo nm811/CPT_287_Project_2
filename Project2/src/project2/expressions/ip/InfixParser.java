@@ -16,7 +16,7 @@ public class InfixParser {
 	 * Checks if a character is part of a valid operator
 	 * @param c: the character being tested to see if it's part of a valid operator
 	 * @return: {true} if the argument character is part of a valid operator;
-	 *          {false} otherwise
+	 *          {false} otherwise.
 	 */
 	private static boolean isPartOfOperator(char c) {
 		// If the character is one of the following return {true}. Otherwise, return {false}.
@@ -30,19 +30,18 @@ public class InfixParser {
 	/* Update by Adam Jost on 07/06/2021 */
 	/**
 	 * 
-	 * Formats an expression by adding whitespace around tokens
-	 * @param exp: expression to be formatted (can be infix, prefix, or postfix)
+	 * Formats an expression by adding whitespace around tokens.
+	 * Note that the parameter expression must be free of all whitespace.
+	 * @param exp: the expression to be formatted which must be free of whitespace. 
 	 * @return: resulting formatted expression as a String with whitespace around
 	 *          tokens.
 	 * @throws IllegalArgumentException: Variables are not currently supported.
 	 */
 	public static String format(String exp) {
-		// First, simplify matters by removing all
-		// white spaces from the expression. 
-		// The following line uses regex to match
-		// and remove all Unicode white space and 
-		// replace them with an empty string.
-		exp = exp.replaceAll("[\\s\\p{Z}]","");
+		// Uncomment the following line to allow passed-in 
+		// expressions containing whitespace.
+		// exp = exp.replaceAll("[\\s\\p{Z}]","");
+		
 		// This is used to build the formatted expression.
 		StringBuilder formattedExp = new StringBuilder();
 		
@@ -50,7 +49,7 @@ public class InfixParser {
 		for (int i = 0; i < exp.length(); i++) {
 			// Save the current Character.
 			char c = exp.charAt(i);
-			// Save the Characters before 
+			// Save the Character before 
 			// the current Character of the expression
 			// that is being analyzed.
 			char beforeC = ' ';
@@ -153,6 +152,7 @@ public class InfixParser {
 				throw new IllegalArgumentException(String.format("Operator \"%s\" is not supported.", exp.charAt(i)));
 			}
 		}
+
 		// Return the formatted expression as a String.
 		return formattedExp.toString();
 	} // Time Complexity: O(n)
