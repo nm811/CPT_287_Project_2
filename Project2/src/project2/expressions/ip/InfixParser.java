@@ -139,28 +139,16 @@ public class InfixParser {
 					i++;
 				}
 				
-				// Move to the next operator/digit of the expression.
-				i++; 
 			} else if (isPartOfOperator(exp.charAt(i))) {
 				// Continuously append the current Character to the StringBuilder 
 				// until a digit is reached.
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
-					// The below check accounts for the following scenarios:
-					// 1.) 1++2 
-					// 2.) 1--2
-					// 3.) 1+-2
-					// 4.) 1-+2
-					// If any of the above scenarios are encountered then
-					// we skip appending this operator because it is not part
-					// of a valid operator sequence (==, !=, <=, >=, &&, ||). 
-					if (exp.charAt(i) == '-' && exp.charAt(i-1) =='-' ||
-							exp.charAt(i) == '+' && exp.charAt(i-1) =='+' ||
-							exp.charAt(i) == '+' && exp.charAt(i-1) =='-' ||
-							exp.charAt(i) == '-' && exp.charAt(i-1) =='+') {
-						i++;
-						continue;
-					}
+					
 					formattedExp.append(exp.charAt(i));
+					if (exp.charAt(i+1) == '-' || exp.charAt(i+1) == '+') {
+						i++;
+						break;
+					}
 					i++;
 				}
 				// Since the last Character was not a operator or part of an
