@@ -143,8 +143,9 @@ public class InfixParser {
 				// Continuously append the current Character to the StringBuilder 
 				// until a digit is reached.
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
-					
 					formattedExp.append(exp.charAt(i));
+					// This accounts for not adding a negative or positive
+					// symbol to the end of an operator. 
 					if (exp.charAt(i+1) == '-' || exp.charAt(i+1) == '+') {
 						i++;
 						break;
