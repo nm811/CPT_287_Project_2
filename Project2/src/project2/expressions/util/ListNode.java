@@ -3,7 +3,7 @@
 package project2.expressions.util;
 
 /**
- * A Node object
+ * A ListNode object
  * @author: Adam Jost
  * @param <T>: Object type
  */
