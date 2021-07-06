@@ -103,14 +103,7 @@ public class InfixParser {
 				i--;
 			} else if (c == '+' && i==0 || c == '+' && isPartOfOperator(beforeC) ||
 					c == '+' && beforeC == '(') {
-				// The current character is a '-' but what is its purpose? 
-				// The above check is to check whether its purpose is to be a 
-				// subtraction operator or to negate an integer value. If it is 
-				// {true} then the symbol is used to negate the following value
-				// otherwise it is a subtraction operator which means that this
-				// check is {false} and moves to the next else-if block.
-				
-				// The above checks for the following scenarios:
+				// The above checks for the following (+) scenarios:
 				// 1.) A '+' symbol is the first character of the expression
 				//     example: +2+1
 				// 2.) A '+' symbol is found directly after an operator
@@ -118,6 +111,9 @@ public class InfixParser {
 				// 3.) A '+' symbol is found directly after an opening parentheses.
 				//     example 1+(+2+1)
 				
+				// If this is the case we simply skip this symbol because it
+				// serves no reason purpose and has no impact on the outcome
+				// of the solution.
 				// If this is the case we simply skip this symbol because it
 				// serves no reason purpose and has no impact on the outcome
 				// of the solution.
