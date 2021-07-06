@@ -27,6 +27,7 @@ public class InfixParser {
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
 	/* Update by Adam Jost on 07/05/2021 */ 
+	/* Update by Adam Jost onn 07/06/2021 */
 	/**
 	 * 
 	 * Formats an expression by adding whitespace around tokens
@@ -96,6 +97,38 @@ public class InfixParser {
 				
 				// Add a blank space after the number.
 				formattedExp.append(' ');
+			} else if (exp.charAt(i) == '+' && i == 0 || exp.charAt(i) == '+' && isPartOfOperator(exp.charAt(i-1)) ||
+					exp.charAt(i) == '+' && Character.isWhitespace(exp.charAt(i-1)) && isPartOfOperator(exp.charAt(i-2)) ||
+					exp.charAt(i) == '+' && exp.charAt(i-1) == '(' || exp.charAt(i) == '+' && exp.length()>=3 &&
+					Character.isWhitespace(exp.charAt(i-1)) && exp.charAt(i-2) == '(') {
+				// The current character is a '+' but what is its purpose? 
+				// The above check is to check whether its purpose is to be a 
+				// addition operator or to show that the integer has (+) value. If it is 
+				// {false} then the symbol is used as an addition operator. If it is true
+				// then the symbol is for showing positive value. 
+				
+				// The above checks for the following scenarios:
+				// 1.) A '+' symbol is the first character of the expression
+				//     example: +2 +1
+				// 2.) A '+' symbol is found directly after an operator
+				//     example: 1 ++2
+				// 3.) A '+' symbol is found directly after an operator that 
+				//     is followed by whitespace.
+				//     example: 1 +   +2
+				// 4.) A '+' symbol is found directly after an opening parentheses.
+				//     example 1 + (+2+1)
+				// 5.) A '+' symbol is found directly after an opening parentheses 
+				//     which is followed by whitespace.
+				//     example: 1 + (    +2+1)
+				
+				// Skip any white space between the '+' symbol and its integer value
+				// counterpart. (example: "1 - +    2" will convert to "1 + +2"). 
+				while (i+1 < exp.length() && Character.isWhitespace(exp.charAt(i+1))) {
+					i++;
+				}
+				
+				// Move to the next operator/digit of the expression.
+				i++; 
 			} else if (isPartOfOperator(exp.charAt(i))) {
 				// Continuously append the current Character to the StringBuilder 
 				// until a digit is reached.
@@ -104,7 +137,7 @@ public class InfixParser {
 					i++;
 				}
 				// Since the last Character was not a operator or part of an
-				// operator then we need to go back one position.
+				// operator the we need to go back one position.
 				i--;
 				// Add a blank space after the operator. 
 				formattedExp.append(' ');
@@ -120,7 +153,7 @@ public class InfixParser {
 			} else if (Character.isLetter(exp.charAt(i))) {
 				// If the user is attempting to use variables in their infix expression then
 				// throw an IllegalArgumentException notifying the user that the found variable 
-				// is not currrently supported in this version. 
+				// is not currently supported in this version. 
 				throw new IllegalArgumentException(String.format("Found letter \"%s\" but expected a numeric value."
 						+ " Variables are not currently supported.", exp.charAt(i)));
 			} else {
@@ -175,7 +208,7 @@ public class InfixParser {
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Updated by Adam Jost on 07/04/2021 */
 	/* Updated by Neha Metlapalli on 07/05/2021 */
-	
+	/* Updated by Adam Jost on 07/05/2021 */ 
 	/**
 	 * Converts an infix expression to postfix expression.
 	 * @param infixExp: an infix expression, tokens may or may not be separated by
