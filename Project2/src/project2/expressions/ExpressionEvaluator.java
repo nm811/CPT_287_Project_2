@@ -25,15 +25,15 @@ public class ExpressionEvaluator {
 		
 		// Parse input data
 		while (scanner.hasNext()) {
-			String line = scanner.nextLine().trim();
-			if (!line.equals("")) {
-				// Read in the infix expression and format it with a single white
-				// space surrounding each token.
-				String infixExp = InfixParser.format(line);
+			// Read in the infix expression and remove all of its whitespace.
+			// The following line uses regex to match and remove all Unicode 
+			// white space and replace it/them with an empty string.
+			String infixExp = scanner.nextLine().replaceAll("[\\s\\p{Z}]","");
+			if (!infixExp.equals("")) {
 				// Print the infix expression to the console.
 				System.out.printf("Infix:   %s\n", infixExp);
 				// Convert the infix expression to a postfix expression.
-				String postfixExp = InfixParser.toPostfix(infixExp);
+				String postfixExp = InfixParser.toPostfix(InfixParser.format(infixExp));
 				// Print the postfix expression to the console.
 				System.out.printf("Postfix: %s\nResult:  ", postfixExp);
 				// Evaluate the postfix expression and then print the
