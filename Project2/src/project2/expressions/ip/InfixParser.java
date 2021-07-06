@@ -62,7 +62,7 @@ public class InfixParser {
 				// subtraction operator or to negate an integer value. If it is 
 				// {true} then the symbol is used to negate the following value
 				// otherwise it is a subtraction operator which means that this
-				// check is {false}.
+				// check is {false} and moves to the next else-if block.
 				
 				// The above checks for the following scenarios:
 				// 1.) A '-' symbol is the first character of the expression
