@@ -40,6 +40,7 @@ public class InfixParser {
 		StringBuilder formattedExp = new StringBuilder();
 		// Analyze each Character of the expression one by one.
 		for (int i = 0; i < exp.length(); i++) {
+			
 			// If the current Character is a number.
 			if (Character.isDigit(exp.charAt(i))) {
 				// Continuously append the current Character to the StringBuilder 
@@ -54,6 +55,17 @@ public class InfixParser {
 				i--;
 				// Add a blank space after the number.
 				formattedExp.append(' ');
+			} else if (Character.isWhitespace(exp.charAt(i))) {
+				// If the character is any form of whitespace then simply continue to
+				// because we do not want to throw the IllegalArgumentException
+				// below when dealing with whitespace characters. 
+				// Skip any white space between the '-' symbol and its integer value
+				// counterpart. (example: "1 + -    2" will convert to "1 + -2").
+				while (i < exp.length() && Character.isWhitespace(exp.charAt(i))) {
+					i++;
+				}
+				i--;
+				continue;
 			} else if (exp.charAt(i) == '-' && i == 0 || exp.charAt(i) == '-' && isPartOfOperator(exp.charAt(i-1)) ||
 					exp.charAt(i) == '-' && Character.isWhitespace(exp.charAt(i-1)) && isPartOfOperator(exp.charAt(i-2)) ||
 					exp.charAt(i) == '-' && exp.charAt(i-1) == '(' || exp.charAt(i) == '-' && exp.length()>=3 &&
@@ -133,12 +145,28 @@ public class InfixParser {
 				// Continuously append the current Character to the StringBuilder 
 				// until a digit is reached.
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
+					// The below check accounts for the following scenarios:
+					// 1.) 1++2 
+					// 2.) 1--2
+					// 3.) 1+-2
+					// 4.) 1-+2
+					// If any of the above scenarios are encountered then
+					// we skip appending this operator because it is not part
+					// of a valid operator sequence (==, !=, <=, >=, &&, ||). 
+					if (exp.charAt(i) == '-' && exp.charAt(i-1) =='-' ||
+							exp.charAt(i) == '+' && exp.charAt(i-1) =='+' ||
+							exp.charAt(i) == '+' && exp.charAt(i-1) =='-' ||
+							exp.charAt(i) == '-' && exp.charAt(i-1) =='+') {
+						i++;
+						continue;
+					}
 					formattedExp.append(exp.charAt(i));
 					i++;
 				}
 				// Since the last Character was not a operator or part of an
 				// operator the we need to go back one position.
 				i--;
+				
 				// Add a blank space after the operator. 
 				formattedExp.append(' ');
 			} else if (exp.charAt(i) == '(' || exp.charAt(i) == ')') {
@@ -146,10 +174,6 @@ public class InfixParser {
 				// append it to the StringBuilder followed by a blank space.
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
-			} else if (Character.isWhitespace(exp.charAt(i))) {
-				// If the character is any form of whitespace then simply continue to
-				// the next character to be evaluated. 
-				continue;
 			} else if (Character.isLetter(exp.charAt(i))) {
 				// If the user is attempting to use variables in their infix expression then
 				// throw an IllegalArgumentException notifying the user that the found variable 
