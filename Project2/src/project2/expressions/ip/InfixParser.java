@@ -43,7 +43,6 @@ public class InfixParser {
 		// and remove all Unicode white space and 
 		// replace them with an empty string.
 		exp = exp.replaceAll("[\\s\\p{Z}]","");
-		
 		// This is used to build the formatted expression.
 		StringBuilder formattedExp = new StringBuilder();
 		
@@ -88,11 +87,7 @@ public class InfixParser {
 				//     example 1+(-2+1)
 				// Append the operator.
 				formattedExp.append(c);
-				// Skip any white space between the '-' symbol and its integer value
-				// counterpart. (example: "1 + -    2" will convert to "1 + -2").
-				while (i++ < exp.length() && Character.isWhitespace(exp.charAt(i))) {
-					continue;
-				}
+				i++;
 				// Continuously append each digit of the number until the end 
 				// of the number is reached. 
 				while (i < exp.length() && Character.isDigit(exp.charAt(i))) {
@@ -102,7 +97,7 @@ public class InfixParser {
 				formattedExp.append(' ');
 				i--;
 			} else if (c == '+' && i==0 || c == '+' && isPartOfOperator(beforeC) ||
-					c == '+' && beforeC == '(') {
+					c == '+' && beforeC == '(') {	
 				// The above checks for the following (+) scenarios:
 				// 1.) A '+' symbol is the first character of the expression
 				//     example: +2+1
@@ -111,9 +106,6 @@ public class InfixParser {
 				// 3.) A '+' symbol is found directly after an opening parentheses.
 				//     example 1+(+2+1)
 				
-				// If this is the case we simply skip this symbol because it
-				// serves no reason purpose and has no impact on the outcome
-				// of the solution.
 				// If this is the case we simply skip this symbol because it
 				// serves no reason purpose and has no impact on the outcome
 				// of the solution.
@@ -148,9 +140,6 @@ public class InfixParser {
 				// append it to the StringBuilder followed by a blank space.
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
-			} else if (Character.isWhitespace(c)) {
-				// Skip all white space Characters.
-				continue;
 			} else if (Character.isLetter(c)) {
 				// If the user is attempting to use variables in their infix expression then
 				// throw an IllegalArgumentException notifying the user that the found variable 
