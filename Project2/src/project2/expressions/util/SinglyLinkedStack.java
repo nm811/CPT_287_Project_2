@@ -46,8 +46,8 @@ public class SinglyLinkedStack<T> {
 	} // Time Complexity: O(1)
 
 	/**
-	 * Tests whether the data container is empty.
-	 * @return: {true} if the SinglyLinkedStack is empty; {false} otherwise
+	 * Tests whether the SinglyLinkedStack is empty.
+	 * @return: {true} if the SinglyLinkedStack is empty; {false} otherwise.
 	 */
 	public boolean isEmpty() {
 		return numItems == 0;
@@ -86,7 +86,7 @@ public class SinglyLinkedStack<T> {
 	} // Time Complexity: O(1)
 
 	/**
-	 * Adds an item to the top of the LinkedListStack.
+	 * Adds an item to the top of the SinglyLinkedStack.
 	 * @param item: The item being added.
 	 */
 	public void push(T item) {
