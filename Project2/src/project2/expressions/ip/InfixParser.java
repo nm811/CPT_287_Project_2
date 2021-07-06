@@ -27,7 +27,7 @@ public class InfixParser {
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
 	/* Update by Adam Jost on 07/05/2021 */ 
-	/* Update by Adam Jost onn 07/06/2021 */
+	/* Update by Adam Jost on 07/06/2021 */
 	/**
 	 * 
 	 * Formats an expression by adding whitespace around tokens
@@ -37,13 +37,27 @@ public class InfixParser {
 	 * @throws IllegalArgumentException: Variables are not currently supported.
 	 */
 	public static String format(String exp) {
-		exp = exp.replaceAll(" ", "");
+		// First, simplify matters by removing all
+		// white spaces from the expression. 
+		// The following line uses regex to match
+		// and remove all Unicode white space and 
+		// replace them with an empty string.
+		exp = exp.replaceAll("[\\s\\p{Z}]","");
+		
+		// This is used to build the formatted expression.
 		StringBuilder formattedExp = new StringBuilder();
-		// Analyze each Character of the expression one by one.
+		
+		// Now we analyze each Character of the expression one by one.
 		for (int i = 0; i < exp.length(); i++) {
-			
+			// Save the current Character.
+			char c = exp.charAt(i);
+			// Save the Characters before 
+			// the current Character of the expression
+			// that is being analyzed.
+			char beforeC = ' ';
+			if (i!=0) { beforeC = exp.charAt(i-1); }
 			// If the current Character is a number.
-			if (Character.isDigit(exp.charAt(i))) {
+			if (Character.isDigit(c)) {
 				// Continuously append the current Character to the StringBuilder 
 				// until an operator is reached. 
 				while (i < exp.length() && Character.isDigit(exp.charAt(i))) {
@@ -56,21 +70,8 @@ public class InfixParser {
 				i--;
 				// Add a blank space after the number.
 				formattedExp.append(' ');
-			} else if (Character.isWhitespace(exp.charAt(i))) {
-				// If the character is any form of whitespace then simply continue to
-				// because we do not want to throw the IllegalArgumentException
-				// below when dealing with whitespace characters. 
-				// Skip any white space between the '-' symbol and its integer value
-				// counterpart. (example: "1 + -    2" will convert to "1 + -2").
-				while (i < exp.length() && Character.isWhitespace(exp.charAt(i))) {
-					i++;
-				}
-				i--;
-				continue;
-			} else if (exp.charAt(i) == '-' && i == 0 || exp.charAt(i) == '-' && isPartOfOperator(exp.charAt(i-1)) ||
-					exp.charAt(i) == '-' && Character.isWhitespace(exp.charAt(i-1)) && isPartOfOperator(exp.charAt(i-2)) ||
-					exp.charAt(i) == '-' && exp.charAt(i-1) == '(' || exp.charAt(i) == '-' && exp.length()>=3 &&
-					Character.isWhitespace(exp.charAt(i-1)) && exp.charAt(i-2) == '(') {
+			} else if (c == '-' && i==0 || c == '-' && isPartOfOperator(beforeC) ||
+					c == '-' && beforeC == '(') {
 				// The current character is a '-' but what is its purpose? 
 				// The above check is to check whether its purpose is to be a 
 				// subtraction operator or to negate an integer value. If it is 
@@ -80,72 +81,59 @@ public class InfixParser {
 				
 				// The above checks for the following scenarios:
 				// 1.) A '-' symbol is the first character of the expression
-				//     example: -2 +1
+				//     example: -2+1
 				// 2.) A '-' symbol is found directly after an operator
-				//     example: 1 +-2
-				// 3.) A '-' symbol is found directly after an operator that 
-				//     is followed by whitespace.
-				//     example: 1 +   -2
-				// 4.) A '-' symbol is found directly after an opening parentheses.
-				//     example 1 + (-2+1)
-				// 5.) A '-' symbol is found directly after an opening parentheses 
-				//     which is followed by whitespace.
-				//     example: 1 + (    -2+1)
-		
+				//     example: 1+-2
+				// 3.) A '-' symbol is found directly after an opening parentheses.
+				//     example 1+(-2+1)
 				// Append the operator.
-				formattedExp.append(exp.charAt(i));
-				
+				formattedExp.append(c);
 				// Skip any white space between the '-' symbol and its integer value
 				// counterpart. (example: "1 + -    2" will convert to "1 + -2").
-				while (i+1 < exp.length() && Character.isWhitespace(exp.charAt(i+1))) {
-					i++;
+				while (i++ < exp.length() && Character.isWhitespace(exp.charAt(i))) {
+					continue;
 				}
-				
 				// Continuously append each digit of the number until the end 
 				// of the number is reached. 
-				while (i+1 < exp.length() && Character.isDigit(exp.charAt(i+1))) {
-					formattedExp.append(exp.charAt(i+1));
-					i++;
+				while (i < exp.length() && Character.isDigit(exp.charAt(i))) {
+					formattedExp.append(exp.charAt(i++));
 				}
-				
 				// Add a blank space after the number.
 				formattedExp.append(' ');
-			} else if (exp.charAt(i) == '+' && i == 0 || exp.charAt(i) == '+' && isPartOfOperator(exp.charAt(i-1)) ||
-					exp.charAt(i) == '+' && Character.isWhitespace(exp.charAt(i-1)) && isPartOfOperator(exp.charAt(i-2)) ||
-					exp.charAt(i) == '+' && exp.charAt(i-1) == '(' || exp.charAt(i) == '+' && exp.length()>=3 &&
-					Character.isWhitespace(exp.charAt(i-1)) && exp.charAt(i-2) == '(') {
-				// The current character is a '+' but what is its purpose? 
+				i--;
+			} else if (c == '+' && i==0 || c == '+' && isPartOfOperator(beforeC) ||
+					c == '+' && beforeC == '(') {
+				// The current character is a '-' but what is its purpose? 
 				// The above check is to check whether its purpose is to be a 
-				// addition operator or to show that the integer has (+) value. If it is 
-				// {false} then the symbol is used as an addition operator. If it is true
-				// then the symbol is for showing positive value. 
+				// subtraction operator or to negate an integer value. If it is 
+				// {true} then the symbol is used to negate the following value
+				// otherwise it is a subtraction operator which means that this
+				// check is {false} and moves to the next else-if block.
 				
 				// The above checks for the following scenarios:
 				// 1.) A '+' symbol is the first character of the expression
-				//     example: +2 +1
+				//     example: +2+1
 				// 2.) A '+' symbol is found directly after an operator
-				//     example: 1 ++2
-				// 3.) A '+' symbol is found directly after an operator that 
-				//     is followed by whitespace.
-				//     example: 1 +   +2
-				// 4.) A '+' symbol is found directly after an opening parentheses.
-				//     example 1 + (+2+1)
-				// 5.) A '+' symbol is found directly after an opening parentheses 
-				//     which is followed by whitespace.
-				//     example: 1 + (    +2+1)
+				//     example: 1-+2
+				// 3.) A '+' symbol is found directly after an opening parentheses.
+				//     example 1+(+2+1)
 				
-				// Skip any white space between the '+' symbol and its integer value
-				// counterpart. (example: "1 - +    2" will convert to "1 + +2"). 
-				while (i+1 < exp.length() && Character.isWhitespace(exp.charAt(i+1))) {
-					i++;
-				}
-				
-			} else if (isPartOfOperator(exp.charAt(i))) {
-				// Continuously append the current Character to the StringBuilder 
-				// until a digit is reached.
+				// If this is the case we simply skip this symbol because it
+				// serves no reason purpose and has no impact on the outcome
+				// of the solution.
+				continue;
+			} else if (isPartOfOperator(c)) {
+				// If the next Character is an operator then we append it. 
+				// We also append the following Character if it to
+				// is an operator. This accounts for:
+				// 1.) >=
+				// 2.) <= 
+				// 3.) &&
+				// 4.) ||
+				// 5.) ==
+				// 6.) !=
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
 					formattedExp.append(exp.charAt(i));
-					
 					// This accounts for not adding a negative or positive
 					// symbol to the end of an operator. 
 					if (exp.charAt(i+1) == '-' || exp.charAt(i+1) == '+') {
@@ -157,15 +145,17 @@ public class InfixParser {
 				// Since the last Character was not a operator or part of an
 				// operator the we need to go back one position.
 				i--;
-				
 				// Add a blank space after the operator. 
 				formattedExp.append(' ');
-			} else if (exp.charAt(i) == '(' || exp.charAt(i) == ')') {
+			}else if (c == '(' || c == ')') {
 				// If the Character is part of a pair of parenthesis then
 				// append it to the StringBuilder followed by a blank space.
 				formattedExp.append(exp.charAt(i));
 				formattedExp.append(' ');
-			} else if (Character.isLetter(exp.charAt(i))) {
+			} else if (Character.isWhitespace(c)) {
+				// Skip all white space Characters.
+				continue;
+			} else if (Character.isLetter(c)) {
 				// If the user is attempting to use variables in their infix expression then
 				// throw an IllegalArgumentException notifying the user that the found variable 
 				// is not currently supported in this version. 
