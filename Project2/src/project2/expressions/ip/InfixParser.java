@@ -37,6 +37,7 @@ public class InfixParser {
 	 * @throws IllegalArgumentException: Variables are not currently supported.
 	 */
 	public static String format(String exp) {
+		exp = exp.replaceAll(" ", "");
 		StringBuilder formattedExp = new StringBuilder();
 		// Analyze each Character of the expression one by one.
 		for (int i = 0; i < exp.length(); i++) {
@@ -144,6 +145,7 @@ public class InfixParser {
 				// until a digit is reached.
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
 					formattedExp.append(exp.charAt(i));
+					
 					// This accounts for not adding a negative or positive
 					// symbol to the end of an operator. 
 					if (exp.charAt(i+1) == '-' || exp.charAt(i+1) == '+') {
