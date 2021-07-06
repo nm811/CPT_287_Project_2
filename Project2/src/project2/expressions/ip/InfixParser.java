@@ -27,7 +27,6 @@ public class InfixParser {
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
 	/* Update by Adam Jost on 07/05/2021 */ 
-	
 	/**
 	 * 
 	 * Formats an expression by adding whitespace around tokens
@@ -62,16 +61,22 @@ public class InfixParser {
 				// The above check is to check whether its purpose is to be a 
 				// subtraction operator or to negate an integer value. If it is 
 				// {true} then the symbol is used to negate the following value
-				// otherwise it is a subtraction operator.
+				// otherwise it is a subtraction operator which means that this
+				// check is {false}.
 				
 				// The above checks for the following scenarios:
 				// 1.) A '-' symbol is the first character of the expression
+				//     example: -2 +1
 				// 2.) A '-' symbol is found directly after an operator
+				//     example: 1 +-2
 				// 3.) A '-' symbol is found directly after an operator that 
 				//     is followed by whitespace.
+				//     example: 1 +   -2
 				// 4.) A '-' symbol is found directly after an opening parentheses.
+				//     example 1 + (-2+1)
 				// 5.) A '-' symbol is found directly after an opening parentheses 
 				//     which is followed by whitespace.
+				//     example: 1 + (    -2+1)
 		
 				// Append the operator.
 				formattedExp.append(exp.charAt(i));
@@ -99,7 +104,7 @@ public class InfixParser {
 					i++;
 				}
 				// Since the last Character was not a operator or part of an
-				// operator the we need to go back one position.
+				// operator then we need to go back one position.
 				i--;
 				// Add a blank space after the operator. 
 				formattedExp.append(' ');
