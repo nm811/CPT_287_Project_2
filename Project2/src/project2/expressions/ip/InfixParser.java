@@ -59,9 +59,7 @@ public class InfixParser {
 				// Continuously append the current Character to the StringBuilder 
 				// until an operator is reached. 
 				while (i < exp.length() && Character.isDigit(exp.charAt(i))) {
-					formattedExp.append(exp.charAt(i));
-					// Move to the next Character in the String.
-					i++;
+					formattedExp.append(exp.charAt(i++));
 				}
 				// Since the last Character was not a number we need to 
 				// go back one position.
@@ -120,14 +118,12 @@ public class InfixParser {
 				// 5.) ==
 				// 6.) !=
 				while (i < exp.length() && isPartOfOperator(exp.charAt(i))) {
-					formattedExp.append(exp.charAt(i));
+					formattedExp.append(exp.charAt(i++));
 					// This accounts for not adding a negative or positive
 					// symbol to the end of an operator. 
-					if (exp.charAt(i+1) == '-' || exp.charAt(i+1) == '+') {
-						i++;
+					if (exp.charAt(i) == '-' || exp.charAt(i) == '+') {
 						break;
 					}
-					i++;
 				}
 				// Since the last Character was not a operator or part of an
 				// operator the we need to go back one position.
@@ -137,8 +133,7 @@ public class InfixParser {
 			}else if (c == '(' || c == ')') {
 				// If the Character is part of a pair of parenthesis then
 				// append it to the StringBuilder followed by a blank space.
-				formattedExp.append(exp.charAt(i));
-				formattedExp.append(' ');
+				formattedExp.append(exp.charAt(i)).append(' ');;
 			} else if (Character.isLetter(c)) {
 				// If the user is attempting to use variables in their infix expression then
 				// throw an IllegalArgumentException notifying the user that the found variable 
