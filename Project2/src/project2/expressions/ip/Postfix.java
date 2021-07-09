@@ -1,5 +1,5 @@
 /* Created by Adam Jost on 07/04/2021 */
-/* Updated by Adam Jost on 07/05/2021 */ 
+/* Updated by Adam Jost on 07/09/2021 */ 
 
 package project2.expressions.ip;
 
@@ -13,7 +13,7 @@ public class Postfix {
 	 * @param expression: the expression to be evaluated.
 	 * @return: the calculated result.
 	 */
-	public static int evaluate(String expression) {
+	public static String evaluate(String expression) {
 		// Initialize a stack for performing the following.
 		SinglyLinkedStack<Integer> stack = new SinglyLinkedStack<>();
 		
@@ -30,6 +30,7 @@ public class Postfix {
 				// Token is a positive integer.
 				stack.push(Integer.valueOf(token));
 			} else if (token.charAt(0) == '-' && token.length() > 1) {
+				
 				// Token is a negative integer.
 				stack.push(Integer.valueOf(token));
 			}
@@ -58,12 +59,8 @@ public class Postfix {
 					try {
 						stack.push((int) lftOperand / rtOperand);
 					} catch (ArithmeticException e) { // Divide-by-zero error
-						if (lftOperand < 0 || rtOperand < 0) {
-							System.out.print("-Infinity \nError:️ Cannot Divide By ");
-						} else {
-							System.out.print("Infinity \nError:️ Cannot Divide By ");
-						}
-						return 0;
+						return "Arithmetic Error\nError: Divide By Zero";
+						//return 0;
 					}
 					break;
 				case "*": // Multiplication
@@ -73,8 +70,11 @@ public class Postfix {
 					stack.push((int) Math.pow(lftOperand, rtOperand));
 					break;
 				case "%": // Modulus
-					stack.push(lftOperand % rtOperand);
-					break;
+					try {
+						stack.push(lftOperand % rtOperand);
+					} catch (ArithmeticException e) { // Modulus-by-zero error
+						return "Arithmetic Error\nError: Modulus By Zero";
+					}
 				case ">": // Greater than 
 						// Push 1 for {true} if the leftOperand is
 						// greater than the right operand, push 0 for {false} 
@@ -127,6 +127,6 @@ public class Postfix {
 			}
 		}
 		// Return the result of the evaluated expression. 
-		return stack.peek();
+		return String.valueOf(stack.peek());
 	}  // Time complexity: O(n)
 }
