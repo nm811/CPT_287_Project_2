@@ -1,3 +1,4 @@
+
 /* Written by Neha Metlapalli and Adam Jost.
  * See individual methods for creation date comments.
  */
@@ -26,8 +27,7 @@ public class InfixParser {
 	
 	/* Written by Neha Metlapalli on 07/03/2021 */
 	/* Comments added by Adam Jost on 07/04/2021 */
-	/* Update by Adam Jost on 07/05/2021 */ 
-	/* Update by Adam Jost on 07/06/2021 */
+	/* Update by Adam Jost on 07/09/2021 */
 	/**
 	 * 
 	 * Formats an expression by adding whitespace around tokens.
@@ -49,12 +49,13 @@ public class InfixParser {
 		for (int i = 0; i < exp.length(); i++) {
 			// Save the current Character.
 			char c = exp.charAt(i);
-			// Save the Character before 
+			// Save the Character before and after
 			// the current Character of the expression
 			// that is being analyzed.
-			char beforeC = ' ';
+			char beforeC = ' ', afterC = ' ';
 			if (i!=0) { beforeC = exp.charAt(i-1); }
-			// If the current Character is a number.
+			if (i!=exp.length()-1) { afterC = exp.charAt(i+1); }
+			
 			if (Character.isDigit(c)) {
 				// Continuously append the current Character to the StringBuilder 
 				// until an operator is reached. 
@@ -66,9 +67,35 @@ public class InfixParser {
 				i--;
 				// Add a blank space after the number.
 				formattedExp.append(' ');
+			} else if (c == '-' && afterC == '-') {
+				// This handles the following scenarios:
+				// 1.) 1--1
+				// 2.) 1--6^2
+				// 3.) 1--(1+1)
+				formattedExp.append('+').append(' ');
+				// Skip the next '-' operator.
+				i++;
+			} else if (exp.length() > 3 && c == '-' && beforeC == ' ' && exp.charAt(i+2) == '^' || 
+					exp.length() > 3 && c == '-' && beforeC == '(' && exp.charAt(i+2) == '^' ||
+					i!=exp.length()-2 && c == '-' && exp.charAt(i+2) == '^' && beforeC == '+') {	
+				// The above checks and handles the following scenarios:
+				// 1.) -6^2 which should equate to -36.
+			    // 2.) (-6^2) which should also equate to -36. 
+				// This will exclude examples such as: 1--6^2 which was handled directly
+				// above.
+				formattedExp.append("-1").append(' ');
+				formattedExp.append('*').append(' ');
+			} else 	if (c == '-' && beforeC == ' ' && afterC == '(' || c == '-' && isPartOfOperator(beforeC) && afterC == '(') {
+				// The above checks and handles the following scenarios:
+				// 1.) -(1+1)  which equates to -2.
+				// 2.) 1+-(1+1) which equates to 1 - 2.
+				// To achieve this I chose to not append the operator itself but to
+				// instead multiply the value within the parentheses by -1. To do this
+				// we must append "-1 *" which means -(1+1) will turn into -1*(1+1).
+				formattedExp.append("-1").append(' ');
+				formattedExp.append('*').append(' ');
 			} else if (c == '-' && i==0 || c == '-' && isPartOfOperator(beforeC) ||
-					c == '-' && beforeC == '(') {
-				// The current character is a '-' but what is its purpose? 
+					c == '-' && beforeC == '(' || c == '-' && afterC == '(') { 
 				// The above check is to check whether its purpose is to be a 
 				// subtraction operator or to negate an integer value. If it is 
 				// {true} then the symbol is used to negate the following value
@@ -93,8 +120,10 @@ public class InfixParser {
 				// Add a blank space after the number.
 				formattedExp.append(' ');
 				i--;
-			} else if (c == '+' && i==0 || c == '+' && isPartOfOperator(beforeC) ||
-					c == '+' && beforeC == '(') {	
+			} /*else if () {
+				
+			} */else if (c == '+' && i==0 || c == '+' && isPartOfOperator(beforeC) ||
+					c == '+' && beforeC == '(' || c == '+' && afterC == '(' && i==0) {	
 				// The above checks for the following (+) scenarios:
 				// 1.) A '+' symbol is the first character of the expression
 				//     example: +2+1
@@ -102,6 +131,11 @@ public class InfixParser {
 				//     example: 1-+2
 				// 3.) A '+' symbol is found directly after an opening parentheses.
 				//     example 1+(+2+1)
+				
+				// Although some of the expressions this check helps correct may
+				// be invalid we can use this to convert the expression to a valid
+				// expression that we are assuming is what the user most likely 
+				// meant by simply removing the invalidly placed '+' operator.
 				
 				// If this is the case we simply skip this symbol because it
 				// serves no reason purpose and has no impact on the outcome
