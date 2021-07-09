@@ -80,7 +80,7 @@ public class InfixParser {
 					i!=exp.length()-2 && c == '-' && exp.charAt(i+2) == '^' && beforeC == '+') {	
 				// The above checks and handles the following scenarios:
 				// 1.) -6^2 which should equate to -36.
-			    // 2.) (-6^2) which should also equate to -36. 
+			        // 2.) (-6^2) which should also equate to -36. 
 				// 3.) 1+-6^2 which should equate to -35
 				// This will exclude examples such as: 1--6^2 which was handled directly
 				// above.
