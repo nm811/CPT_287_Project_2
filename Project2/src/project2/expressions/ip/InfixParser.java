@@ -178,12 +178,10 @@ public class InfixParser {
 			} else if (Character.isLetter(c)) {
 				// If the user is attempting to use variables in their infix expression then
 				// print the following notifying the user that the infix expression is invalid.
-				return "Invalid Expression Error";
+				formattedExp.append(exp.charAt(i)).append(' ');
 			} else {
 				// If none of the above apply then the character must be an unrecognized symbol,
-				// so
-				// throw an IllegalArgumentException notifying the user that the item is not
-				// currently supported.
+				// so we return an "Invalid Expression Error" message.
 				return "Invalid Expression Error";			
 			}
 		}
