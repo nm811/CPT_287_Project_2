@@ -25,26 +25,21 @@ public class Postfix {
 		while (tokenizer.hasMoreTokens()) {
 			// The current token being analyzed.
 			String token = tokenizer.nextToken();
-
+			
 			// If the token is a number (digit), push it to the stack.
 			if (Character.isDigit(token.charAt(0))) {
 				// Token is a positive integer.
 				stack.push(Integer.valueOf(token));
-			} else if (token.charAt(0) == '-' && token.length() > 1) {
-				// This try/catch block accounts for some invalid expressions 
-				// such as 1-=1 or 1+=2.
-				try {
-					// Token is a negative integer.
-					stack.push(Integer.valueOf(token));
-				} catch (NumberFormatException e) {
-					return "Invalid Expression Error \nError: Invalid Use of Operators";
-				}
 			}
-
 			// If the character is an operator then pop two
 			// elements from stack and then perform the operation.
 			else {
 				int rtOperand = -1, lftOperand = -1;
+				// Try to perform the following:
+				// If an exception is caught then the infix expression was invalid
+				// beyond the intelligent error handling contained in this
+				// program. Successful evaluation is not possible so we output
+				// an invalid infix expression error message to the console.
 				try {
 					// Pop the top two digits to be used as the
 					// left and right operands of the following
@@ -52,10 +47,6 @@ public class Postfix {
 					rtOperand = stack.pop();
 					lftOperand = stack.pop();
 				} catch (IllegalArgumentException e) {
-					// If an exception is thrown then infix expression was invalid
-					// beyond the intelligent error handling contained in this
-					// program. Successful evaluation is not possible so we output
-					// an error message to the console.
 					return "Invalid Expression Error\nError: Invalid Infix Expression";
 				}
 
@@ -74,7 +65,6 @@ public class Postfix {
 						stack.push((int) lftOperand / rtOperand);
 					} catch (ArithmeticException e) { // Divide-by-zero error
 						return "Arithmetic Error\nError: Divide By Zero";
-						// return 0;
 					}
 					break;
 				case "*": // Multiplication
