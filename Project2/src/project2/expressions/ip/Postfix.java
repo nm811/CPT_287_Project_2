@@ -1,11 +1,11 @@
 /* Created by Adam Jost on 07/04/2021 */
 /* Updated by Adam Jost on 07/09/2021 */
 
-package project2.expressions.ip;
+package main.java.ip;
 
 import java.util.StringTokenizer;
 
-import project2.expressions.util.SinglyLinkedStack;
+import main.java.util.SinglyLinkedStack;
 
 public class Postfix {
 	/**
@@ -25,9 +25,10 @@ public class Postfix {
 		while (tokenizer.hasMoreTokens()) {
 			// The current token being analyzed.
 			String token = tokenizer.nextToken();
-			
+
 			// If the token is a number (digit), push it to the stack.
-			if (Character.isDigit(token.charAt(0))) {
+			if (Character.isDigit(token.charAt(0))
+					|| token.length() > 1 && token.charAt(0) == '-' && Character.isDigit(token.charAt(1))) {
 				// Token is a positive integer.
 				stack.push(Integer.valueOf(token));
 			}
