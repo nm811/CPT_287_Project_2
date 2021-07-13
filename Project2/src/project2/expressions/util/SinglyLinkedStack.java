@@ -10,7 +10,7 @@ package project2.expressions.util;
 public class SinglyLinkedStack<T> {
 
 	// Data fields
-	private ListNode<T> head;
+	private ListNode<T> top;
 	private int numItems;
 
 	// Default constructor
@@ -25,8 +25,8 @@ public class SinglyLinkedStack<T> {
 		// If there is at least one item: 
 		if (numItems != 0) {
 			// Copy the top item of the other stack.
-			head = new ListNode<T>(other.head.data);
-			ListNode<T> copy = head, original = other.head.next;
+			top = new ListNode<T>(other.top.data);
+			ListNode<T> copy = top, original = other.top.next;
 			// Traverse the stack, copying all of its items. 
 			while (original != null) {
 				copy.next = new ListNode<T>(original.data);
@@ -46,8 +46,8 @@ public class SinglyLinkedStack<T> {
 	} // Time Complexity: O(1)
 
 	/**
-	 * Tests whether the SinglyLinkedStack is empty.
-	 * @return: {true} if the SinglyLinkedStack is empty; {false} otherwise.
+	 * Tests whether the data container is empty.
+	 * @return: {true} if the SinglyLinkedStack is empty; {false} otherwise
 	 */
 	public boolean isEmpty() {
 		return numItems == 0;
@@ -63,7 +63,7 @@ public class SinglyLinkedStack<T> {
 			throw new IllegalArgumentException("Accessing non existent item."); 
 		}
 		
-		return head.data;
+		return top.data;
 	} // Time Complexity: O(1)
 
 	/**
@@ -77,8 +77,8 @@ public class SinglyLinkedStack<T> {
 		}
 		// Remove the top item in the SinglyLinkedStack and decrease the number of items
 		// in the LinkedListStack by one.
-		T topElement = head.data;
-		head = head.next;
+		T topElement = top.data;
+		top = top.next;
 		numItems--;
 	
 		// Return the removed item.
@@ -86,15 +86,15 @@ public class SinglyLinkedStack<T> {
 	} // Time Complexity: O(1)
 
 	/**
-	 * Adds an item to the top of the SinglyLinkedStack.
+	 * Adds an item to the top of the LinkedListStack.
 	 * @param item: The item being added.
 	 */
 	public void push(T item) {
 		ListNode<T> newTop = new ListNode<T>(item);
 		// Add a new item to the top of the stack and increment
 		// the number of items in the SinglyLinkedStack. 
-		newTop.next = head;
-		head = newTop;
+		newTop.next = top;
+		top = newTop;
 		numItems++;
 	} // Time Complexity: O(1)
 
