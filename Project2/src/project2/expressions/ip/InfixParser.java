@@ -1,13 +1,12 @@
-
 /* Written by Neha Metlapalli and Adam Jost.
  * See individual methods for creation date comments.
  */
 
-package project2.expressions.ip;
+package main.java.ip;
 
 import java.util.StringTokenizer;
 
-import project2.expressions.util.SinglyLinkedStack;
+import main.java.util.SinglyLinkedStack;
 
 public class InfixParser {
 
@@ -170,6 +169,12 @@ public class InfixParser {
 				i--;
 				// Add a blank space after the operator.
 				formattedExp.append(' ');
+			} else if (c == '(' && Character.isDigit(beforeC)) {
+				// Accounts for:
+				// -5(8) which converts to -5 * ( 8 )
+				formattedExp.append('*').append(' ');
+				formattedExp.append(exp.charAt(i)).append(' ');
+				
 			} else if (c == '(' || c == ')') {
 				// If the Character is part of a pair of parenthesis then
 				// append it to the StringBuilder followed by a blank space.
@@ -189,8 +194,9 @@ public class InfixParser {
 		// Return the formatted expression as a String.
 		return formattedExp.toString();
 	} // Time Complexity: O(n)
-
-	/* Written by Adam Jost on 07/04/2021 */
+	
+	/* Original version written by Neha Metlapalli */
+	/* Current version completely written by Adam Jost on 07/04/2021 */
 	/**
 	 * Returns the precedence of an operator.
 	 * 
