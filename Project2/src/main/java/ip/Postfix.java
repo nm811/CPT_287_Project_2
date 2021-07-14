@@ -119,15 +119,15 @@ public class Postfix {
 					stack.push(lftOperand != rtOperand ? 1 : 0);
 					break;
 				case "&&": // Logic And
-					// Push 1 for {true} if both operands are equal to 1
+					// Push 1 for {true} if both operands are >= to 1
 					// and push 0 for {false} if either the left or right
-					// operand is zero.
+					// operand is less than 1.
 					stack.push(lftOperand > 0 && rtOperand > 0 ? 1 : 0);
 					break;
 				case "||": // Logic Or
-					// Push 1 for {true} if either operand is equal to 1
+					// Push 1 for {true} if either operand is >= to 1
 					// and push 0 for {false} if both the left and right
-					// operands are equal to zero.
+					// operands are less than 1.
 					stack.push(lftOperand > 0 || rtOperand > 0 ? 1 : 0);
 					break;
 				}
