@@ -288,6 +288,9 @@ public class InfixParser {
 				// Pop the opening parenthesis from the stack.
 				stack.pop();
 			} else {
+				// If the return value is -1 then an IllegalArgumentException was caught in 
+				// the precedence method which means that the input expression must be
+				// invalid.
 				if (precedence(token) == -1) {
 					return "Invalid Expression Error";
 				}
