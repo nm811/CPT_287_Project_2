@@ -26,10 +26,9 @@ public class Postfix {
 			// The current token being analyzed.
 			String token = tokenizer.nextToken();
 
-			// If the token is a number (digit), push it to the stack.
+			// If the token is a positive or a negative integer, push it to the stack.
 			if (Character.isDigit(token.charAt(0))
 					|| token.length() > 1 && token.charAt(0) == '-' && Character.isDigit(token.charAt(1))) {
-				// Token is a positive integer.
 				stack.push(Integer.valueOf(token));
 			}
 			// If the character is an operator then pop two
